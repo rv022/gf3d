@@ -24,6 +24,8 @@
 #include "gf3d_camera.h"
 #include "gf3d_texture.h"
 #include "gf3d_draw.h"
+#include "entity.h"
+#include "player.h"
 
 extern int __DEBUG;
 
@@ -58,6 +60,7 @@ int main(int argc,char *argv[])
     //local variables
     Model *sky,*dino;
     GFC_Matrix4 skyMat,dinoMat;
+    Entity *player;
     //initializtion    
     parse_arguments(argc,argv);
     init_logger("gf3d.log",0);
@@ -73,6 +76,7 @@ int main(int argc,char *argv[])
     gf2d_actor_init(1000);
     gf3d_draw_init();//3D
     gf2d_draw_manager_init(1000);//2D
+    entity_system_initialize(1024);
     
     //game init
     srand(SDL_GetTicks());
@@ -84,6 +88,7 @@ int main(int argc,char *argv[])
     gfc_matrix4_identity(skyMat);
     dino = gf3d_model_load("models/dino.model");
     gfc_matrix4_identity(dinoMat);
+    player = player_new();
         //camera
     gf3d_camera_set_scale(gfc_vector3d(1,1,1));
     gf3d_camera_set_position(gfc_vector3d(15,-15,10));
@@ -105,17 +110,25 @@ int main(int argc,char *argv[])
         gf3d_camera_update_view();
         gf3d_camera_get_view_mat4(gf3d_vgraphics_get_view_matrix());
 
+        entity_system_think();
+        entity_system_update();
+
         gf3d_vgraphics_render_start();
 
             //3D draws
         
                 gf3d_model_draw_sky(sky,skyMat,GFC_COLOR_WHITE);
+
+
+                entity_system_draw();
+/*
                 gf3d_model_draw(
                     dino,
                     dinoMat,
                     GFC_COLOR_WHITE,
                     0);
-                draw_origin();
+*/
+                    draw_origin();
             //2D draws
                 gf2d_mouse_draw();
                 gf2d_font_draw_line_tag("ALT+F4 to exit",FT_H1,GFC_COLOR_WHITE, gfc_vector2d(10,10));
@@ -125,6 +138,7 @@ int main(int argc,char *argv[])
     }    
     vkDeviceWaitIdle(gf3d_vgraphics_get_default_logical_device());    
     //cleanup
+    entity_free(player);
     slog("gf3d program end");
     exit(0);
     slog_sync();

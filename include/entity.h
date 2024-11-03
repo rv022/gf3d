@@ -6,12 +6,13 @@
 
 typedef struct Entity_S
 {
-    uint8 _inuse; /**<Flag for keeping track of memory usage*/
+    Uint8 _inuse; /**<Flag for keeping track of memory usage*/
     Model *model; /**<Entity's model if it has one.*/
-    Vector3D position; /**<where entity will be drawn*/
-    void (think*)(struct Entity_S *self);
-    void (update*)(struct Entity_S *self);
-    void (free*)(struct Entity_S *self);
+    GFC_Matrix4 modelMat; /**<Entity's model mat.*/
+    GFC_Vector3D position; /**<where entity will be drawn*/
+    void (*think)(struct Entity_S *self);
+    void (*update)(struct Entity_S *self);
+    void (*free)(struct Entity_S *self);
     void *data;
 }Entity;
 
