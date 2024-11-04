@@ -310,22 +310,6 @@ void gf3d_camera_controls_update()
             position = gf3d_camera_get_position();
             slog("position: %f,%f,%f",position.x,position.y,position.z);
         }
-        if (keys[SDL_SCANCODE_W])
-        {
-            gf3d_camera_walk_forward(moveSpeed);
-        }
-        if (keys[SDL_SCANCODE_S])
-        {
-            gf3d_camera_walk_forward(-moveSpeed);
-        }
-        if (keys[SDL_SCANCODE_D])
-        {
-            gf3d_camera_walk_right(moveSpeed);
-        }
-        if (keys[SDL_SCANCODE_A])    
-        {
-            gf3d_camera_walk_right(-moveSpeed);
-        }
         if (keys[SDL_SCANCODE_SPACE])gf3d_camera_move_up(moveSpeed);
         if (keys[SDL_SCANCODE_Z])gf3d_camera_move_up(-moveSpeed);
         

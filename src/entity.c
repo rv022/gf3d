@@ -114,6 +114,7 @@ void entity_draw(Entity *self)
     if(!self)return;
     if(self->model)
     {
+        gfc_matrix4_from_vectors(self->modelMat,self->position,self->rotation,self->scale);
         gf3d_model_draw(
             self->model,
             self->modelMat,

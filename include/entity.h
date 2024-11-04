@@ -10,6 +10,8 @@ typedef struct Entity_S
     Model *model; /**<Entity's model if it has one.*/
     GFC_Matrix4 modelMat; /**<Entity's model mat.*/
     GFC_Vector3D position; /**<where entity will be drawn*/
+    GFC_Vector3D rotation;
+    GFC_Vector3D scale;
     void (*think)(struct Entity_S *self);
     void (*update)(struct Entity_S *self);
     void (*free)(struct Entity_S *self);
