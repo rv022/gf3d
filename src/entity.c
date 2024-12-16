@@ -131,8 +131,30 @@ void entity_system_draw()
     {
         if(!_entity_manager.entity_list[i]._inuse)continue;
         entity_draw(&_entity_manager.entity_list[i]);
-    }
+    };
 
 }
 
+void entity_collide(Entity *self)
+{
+    if(!self)return;
+
+}
+
+void entity_system_collide()
+{
+    int i;
+    for(i=1; i<_entity_manager.entity_max;i++)
+    {
+        if(!_entity_manager.entity_list[i]._inuse)continue;
+        if(gfc_box_overlap(_entity_manager.entity_list[0].body,_entity_manager.entity_list[i].body) == 1)
+        {
+            slog("collision");
+            entity_collide(&_entity_manager.entity_list[0]);
+        }
+        else
+            slog("no collision");
+    };
+
+}
 /*eol@eof*/

@@ -2,6 +2,7 @@
 #include "gfc_vector.h"
 #include "gfc_matrix.h"
 #include "gf3d_camera.h"
+#include "entity.h"
 #include "player.h"
 
 void player_think(Entity *self);
@@ -22,6 +23,7 @@ Entity *player_new()
     self->position = gfc_vector3d(0,0,0); /**<where entity will be drawn*/
     self->rotation = gfc_vector3d(0,0,0);
     self->scale = gfc_vector3d(1,1,1);
+    self->body = gfc_box(self->position.x, self->position.y, self->position.z, 1.0f, 1.0f, 1.0f);
 
 
     self->think = player_think;
@@ -38,10 +40,13 @@ void player_think(Entity *self)
 void player_update(Entity *self)
 {
     if(!self)return;
+    self->body = gfc_box(self->position.x, self->position.y, self->position.z, 1.0f, 1.0f, 1.0f);
     GFC_Vector3D cameraPosition;
-    gfc_vector3d_add(cameraPosition,self->position,gfc_vector3d(0,-25,25));
+    gfc_vector3d_add(cameraPosition,self->position,gfc_vector3d(0,-15,15));
     gf3d_camera_set_position(cameraPosition);
+    gf3d_camera_set_rotation(self->rotation);
     gf3d_camera_look_at(self->position, NULL);
+
 
     //Player controls
     const Uint8 * keys;
@@ -54,7 +59,7 @@ void player_update(Entity *self)
         forward.x = w.x;
         forward.y = w.y;
         gfc_vector3d_set_magnitude(&forward,1);
-        gfc_vector3d_sub(self->position,self->position,forward);
+        gfc_vector3d_add(self->position,self->position,forward);
     }
     if (keys[SDL_SCANCODE_S])
     {
@@ -64,7 +69,7 @@ void player_update(Entity *self)
         forward.x = w.x;
         forward.y = w.y;
         gfc_vector3d_set_magnitude(&forward,-1);
-        gfc_vector3d_sub(self->position,self->position,forward);
+        gfc_vector3d_add(self->position,self->position,forward);
     }
     if (keys[SDL_SCANCODE_D])
     {
@@ -74,7 +79,7 @@ void player_update(Entity *self)
         right.x = w.x;
         right.y = w.y;
         gfc_vector3d_set_magnitude(&right,1);
-        gfc_vector3d_sub(self->position,self->position,right);
+        gfc_vector3d_add(self->position,self->position,right);
     }
     if (keys[SDL_SCANCODE_A])
     {
@@ -84,7 +89,7 @@ void player_update(Entity *self)
         right.x = w.x;
         right.y = w.y;
         gfc_vector3d_set_magnitude(&right,-1);
-        gfc_vector3d_sub(self->position,self->position,right);
+        gfc_vector3d_add(self->position,self->position,right);
     }
     if (keys[SDL_SCANCODE_RIGHT])gfc_vector3d_add(self->rotation,self->rotation,gfc_vector3d(0,0,-0.1));
     if (keys[SDL_SCANCODE_LEFT])gfc_vector3d_add(self->rotation,self->rotation,gfc_vector3d(0,0,0.1));

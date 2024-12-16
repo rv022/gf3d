@@ -26,6 +26,7 @@
 #include "gf3d_draw.h"
 #include "entity.h"
 #include "player.h"
+#include "enemy.h"
 
 extern int __DEBUG;
 
@@ -60,7 +61,7 @@ int main(int argc,char *argv[])
     //local variables
     Model *sky,*dino;
     GFC_Matrix4 skyMat,dinoMat;
-    Entity *player;
+    Entity *player, *enemy;
     //initializtion    
     parse_arguments(argc,argv);
     init_logger("gf3d.log",0);
@@ -89,6 +90,7 @@ int main(int argc,char *argv[])
     dino = gf3d_model_load("models/dino.model");
     gfc_matrix4_identity(dinoMat);
     player = player_new();
+    enemy = enemy_new();
         //camera
     gf3d_camera_set_scale(gfc_vector3d(1,1,1));
     gf3d_camera_set_position(gfc_vector3d(15,-15,10));
@@ -111,6 +113,7 @@ int main(int argc,char *argv[])
 
         entity_system_think();
         entity_system_update();
+        entity_system_collide();
 
         gf3d_vgraphics_render_start();
 

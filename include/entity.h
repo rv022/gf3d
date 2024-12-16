@@ -3,6 +3,7 @@
 
 #include "gfc_types.h"
 #include "gf3d_model.h"
+#include "gfc_primitives.h"
 
 typedef struct Entity_S
 {
@@ -12,9 +13,11 @@ typedef struct Entity_S
     GFC_Vector3D position; /**<where entity will be drawn*/
     GFC_Vector3D rotation;
     GFC_Vector3D scale;
+    GFC_Box body;
     void (*think)(struct Entity_S *self);
     void (*update)(struct Entity_S *self);
     void (*free)(struct Entity_S *self);
+    void (*collide)(struct Entity_S *self);
     void *data;
 }Entity;
 
@@ -31,6 +34,8 @@ void entity_system_think();
 void entity_system_update();
 
 void entity_system_draw();
+
+void entity_system_collide();
 
 
 #endif
