@@ -51,13 +51,25 @@ void player_collide(Entity *self)
     if(!self)return;
     slog("reached this");
     if(direction == 1)
-        frontCollision=1;
+    {
+     frontCollision=1;
+     gfc_vector3d_add(self->position,self->position,gfc_vector3d(0,-0.7,0));
+    }
     else if(direction == 2)
+    {
         backCollision =1;
+        gfc_vector3d_add(self->position,self->position,gfc_vector3d(0,0.7,0));
+    }
     else if(direction == 3)
+    {
         rightCollision=1;
+        gfc_vector3d_add(self->position,self->position,gfc_vector3d(-0.7,0,0));
+    }
     else if(direction == 4)
+    {
         leftCollision=1;
+        gfc_vector3d_add(self->position,self->position,gfc_vector3d(0.7,0,0));
+    }
 }
 
 void player_update(Entity *self)

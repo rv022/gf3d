@@ -133,7 +133,7 @@ int main(int argc,char *argv[])
                     draw_origin();
             //2D draws
                 gf2d_mouse_draw();
-                gf2d_font_draw_line_tag("ALT+F4 to exit",FT_H1,GFC_COLOR_WHITE, gfc_vector2d(10,10));
+                gf2d_font_draw_line_tag("Health: 100",FT_H1,GFC_COLOR_WHITE, gfc_vector2d(10,10));
         gf3d_vgraphics_render_end();
         if (gfc_input_command_down("exit"))_done = 1; // exit condition
         game_frame_delay();
