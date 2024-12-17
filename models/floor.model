@@ -1,0 +1,7 @@
+{
+    "model":
+    {
+        "obj":"models/ThroneRoom/floor.obj"
+        "texture":"models/ThroneRoom/floor.jpg"
+    }
+}

@@ -25,7 +25,7 @@ Entity *player_new()
         slog("failed to spawn a player entity");
         return NULL;
     }
-    self->model = gf3d_model_load("models/dino.model"); /**<Entity's model if it has one.*/
+    self->model = gf3d_model_load("models/player.model"); /**<Entity's model if it has one.*/
     self->position = gfc_vector3d(0,0,0); /**<where entity will be drawn*/
     self->rotation = gfc_vector3d(0,0,0);
     self->scale = gfc_vector3d(1,1,1);

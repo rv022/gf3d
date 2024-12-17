@@ -61,7 +61,7 @@ int main(int argc,char *argv[])
     //local variables
     Model *sky,*dino;
     GFC_Matrix4 skyMat,dinoMat;
-    Entity *player, *enemy;
+    Entity *player, *enemy, *backWall, *throne, *door, *frontRightWall, *frontLeftWall, *leftWall, *rightWall, *floor;
     //initializtion    
     parse_arguments(argc,argv);
     init_logger("gf3d.log",0);
@@ -91,6 +91,14 @@ int main(int argc,char *argv[])
     gfc_matrix4_identity(dinoMat);
     player = player_new();
     enemy = enemy_new();
+    backWall = backWall_new();
+    floor = floor_new();
+    throne = throne_new();
+    leftWall = leftWall_new();
+    rightWall = rightWall_new();
+    frontLeftWall = frontLeftWall_new();
+    frontRightWall = frontRightWall_new();
+    door = door_new();
         //camera
     gf3d_camera_set_scale(gfc_vector3d(1,1,1));
     gf3d_camera_set_position(gfc_vector3d(15,-15,10));
