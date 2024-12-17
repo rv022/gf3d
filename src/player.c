@@ -8,6 +8,12 @@
 void player_think(Entity *self);
 void player_update(Entity *self);
 void player_free(Entity *self);
+void player_collide(Entity *self);
+int direction = 0;
+int frontCollision = 0;
+int leftCollision = 0;
+int rightCollision = 0;
+int backCollision = 0;
 
 Entity *player_new()
 {
@@ -29,6 +35,7 @@ Entity *player_new()
     self->think = player_think;
     self->update = player_update;
     self->free = player_free;
+    self->collide = player_collide;
 
     return self;
 }
@@ -37,6 +44,22 @@ void player_think(Entity *self)
 {
     if(!self)return;
 }
+
+void player_collide(Entity *self)
+{
+    slog("reached this");
+    if(!self)return;
+    slog("reached this");
+    if(direction == 1)
+        frontCollision=1;
+    else if(direction == 2)
+        backCollision =1;
+    else if(direction == 3)
+        rightCollision=1;
+    else if(direction == 4)
+        leftCollision=1;
+}
+
 void player_update(Entity *self)
 {
     if(!self)return;
@@ -51,45 +74,65 @@ void player_update(Entity *self)
     //Player controls
     const Uint8 * keys;
     keys = SDL_GetKeyboardState(NULL);
-    if (keys[SDL_SCANCODE_W])
+    if (keys[SDL_SCANCODE_W] && frontCollision==0)
     {
-        GFC_Vector2D w;
+        /*GFC_Vector2D w; old movement
         GFC_Vector3D forward = {0};
         w = gfc_vector2d_from_angle(self->rotation.z);
         forward.x = w.x;
         forward.y = w.y;
         gfc_vector3d_set_magnitude(&forward,1);
-        gfc_vector3d_add(self->position,self->position,forward);
+        gfc_vector3d_add(self->position,self->position,forward);*/
+        gfc_vector3d_add(self->position,self->position,gfc_vector3d(0,0.7,0));
+        direction = 1;
+        backCollision=0;
+        leftCollision=0;
+        rightCollision=0;
     }
-    if (keys[SDL_SCANCODE_S])
+    if (keys[SDL_SCANCODE_S] && backCollision==0)
     {
-        GFC_Vector2D w;
+        /*GFC_Vector2D w;
         GFC_Vector3D forward = {0};
         w = gfc_vector2d_from_angle(self->rotation.z);
         forward.x = w.x;
         forward.y = w.y;
         gfc_vector3d_set_magnitude(&forward,-1);
-        gfc_vector3d_add(self->position,self->position,forward);
+        gfc_vector3d_add(self->position,self->position,forward);*/
+        gfc_vector3d_add(self->position,self->position,gfc_vector3d(0,-0.7,0));
+        direction = 2;
+        frontCollision=0;
+        leftCollision=0;
+        rightCollision=0;
     }
-    if (keys[SDL_SCANCODE_D])
+    if (keys[SDL_SCANCODE_D] && rightCollision==0)
     {
-        GFC_Vector2D w;
+        /*GFC_Vector2D w;
         GFC_Vector3D right = {0};
         w = gfc_vector2d_from_angle(self->rotation.z - GFC_HALF_PI);
         right.x = w.x;
         right.y = w.y;
         gfc_vector3d_set_magnitude(&right,1);
-        gfc_vector3d_add(self->position,self->position,right);
+        gfc_vector3d_add(self->position,self->position,right);*/
+        gfc_vector3d_add(self->position,self->position,gfc_vector3d(0.7,0,0));
+        direction = 3;
+        backCollision=0;
+        leftCollision=0;
+        frontCollision=0;
     }
-    if (keys[SDL_SCANCODE_A])
+    if (keys[SDL_SCANCODE_A] && leftCollision==0)
     {
-        GFC_Vector2D w;
+        /*GFC_Vector2D w;
         GFC_Vector3D right = {0};
         w = gfc_vector2d_from_angle(self->rotation.z - GFC_HALF_PI);
         right.x = w.x;
         right.y = w.y;
         gfc_vector3d_set_magnitude(&right,-1);
-        gfc_vector3d_add(self->position,self->position,right);
+        gfc_vector3d_add(self->position,self->position,right);*/
+        gfc_vector3d_add(self->position,self->position,gfc_vector3d(-0.7,0,0));
+        direction = 4;
+        backCollision=0;
+        frontCollision=0;
+        rightCollision=0;
     }
     if (keys[SDL_SCANCODE_RIGHT])gfc_vector3d_add(self->rotation,self->rotation,gfc_vector3d(0,0,-0.1));
     if (keys[SDL_SCANCODE_LEFT])gfc_vector3d_add(self->rotation,self->rotation,gfc_vector3d(0,0,0.1));

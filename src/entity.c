@@ -138,6 +138,7 @@ void entity_system_draw()
 void entity_collide(Entity *self)
 {
     if(!self)return;
+    if(self->collide)self->collide(self);
 
 }
 
