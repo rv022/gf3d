@@ -89,6 +89,65 @@ void make_dungeon()
     rightWall = rightWall_new(200);
 }
 
+void randomEnemies()
+{
+    Entity *redKnight, *orangeKnight, *yellowKnight, *greenKnight, *blueKnight, *indigoKnight, *violetKnight;
+    Entity *chest, *redStatue, *greenStatue, *blueStatue;
+    int room = 1;
+    int monNum;
+    while(room<5)
+    {
+        monNum = rand() % 9;
+    if (monNum==0)
+    {
+        orangeKnight = orangeKnight_new(40*room);
+    }
+    if (monNum==1)
+    {
+        yellowKnight = yellowKnight_new(40*room);
+    }
+    if (monNum==2)
+    {
+        greenKnight = greenKnight_new(40*room);
+    }
+    if (monNum==3)
+    {
+        blueKnight = blueKnight_new(40*room);
+    }
+    if (monNum==4)
+    {
+        indigoKnight = indigoKnight_new(40*room);
+    }
+    if (monNum==5)
+    {
+        chest = chest_new(40*room);
+    }
+    if (monNum==6)
+    {
+        redStatue = redStatue_new(40*room);
+    }
+    if (monNum==7)
+    {
+        blueStatue = blueStatue_new(40*room);
+    }
+    if (monNum==8)
+    {
+        greenStatue = greenStatue_new(40*room);
+    }
+    room+=1;
+    }
+    monNum = rand() % 2;
+    if (monNum==0)
+    {
+        redKnight = redKnight_new(200);
+    }
+    if (monNum==1)
+    {
+        violetKnight = violetKnight_new(200);
+    }
+
+}
+
 void draw_origin()
 {
     gf3d_draw_edge_3d(
@@ -108,11 +167,16 @@ int main(int argc,char *argv[])
     //local variables
     Model *sky,*dino;
     GFC_Matrix4 skyMat,dinoMat;
-    Entity *player, *orangeKnight, *backWall, *throne, *door, *frontRightWall, *frontLeftWall, *leftWall, *rightWall, *floor;
+    Entity *player, *backWall, *throne, *door, *frontRightWall, *frontLeftWall, *leftWall, *rightWall, *floor;
+    Entity *redKnight, *orangeKnight, *yellowKnight, *greenKnight, *blueKnight, *indigoKnight, *violetKnight;
+    Entity *chest, *redStatue, *greenStatue, *blueStatue;
     GFC_Rect screenTest, square1,square2,square3,square4,square5;
     int mainMenuOn = 0;
     int buildMenuOn = 0;
+    int room = 1;
+    int keyCode = 1;
     const Uint8 * keys;
+
 
     //initializtion    
     parse_arguments(argc,argv);
@@ -149,7 +213,6 @@ int main(int argc,char *argv[])
     dino = gf3d_model_load("models/dino.model");
     gfc_matrix4_identity(dinoMat);
     player = player_new();
-    orangeKnight = orangeKnight_new(0);
     make_dungeon();
 
 
@@ -179,11 +242,12 @@ int main(int argc,char *argv[])
         entity_system_collide();
 
         gf3d_vgraphics_render_start();
-        if (keys[SDL_SCANCODE_O])
+        if (keys[SDL_SCANCODE_P])
         {
            mainMenuOn=1;
+           randomEnemies();
         }
-        if (keys[SDL_SCANCODE_P])
+        if (keys[SDL_SCANCODE_L])
         {
             buildMenuOn=1;
         }
@@ -212,18 +276,95 @@ int main(int argc,char *argv[])
                 {
                     gf2d_draw_rect_filled(screenTest,GFC_COLOR_BLACK);
                     gf2d_font_draw_line_tag("Train of Thought",FT_H1,GFC_COLOR_WHITE, gfc_vector2d(100,300));
+                    if(keyCode<5)
+                    {
                     gf2d_draw_rect(square1,GFC_COLOR_WHITE);
                     gf2d_draw_rect(square2,GFC_COLOR_WHITE);
                     gf2d_draw_rect(square3,GFC_COLOR_WHITE);
                     gf2d_draw_rect(square4,GFC_COLOR_WHITE);
                     gf2d_draw_rect(square5,GFC_COLOR_WHITE);
+                    }
+                    //Key Code for Dungeon Picker
+                    if (keys[SDL_SCANCODE_R])
+                    {
+                        redKnight = redKnight_new(40*keyCode);
+                        keyCode+=1;
+                    }
+                    if (keys[SDL_SCANCODE_O])
+                    {
+                        orangeKnight = orangeKnight_new(40*keyCode);
+                        keyCode+=1;
+                    }
+                    if (keys[SDL_SCANCODE_Y])
+                    {
+                        yellowKnight = yellowKnight_new(40*keyCode);
+                        keyCode+=1;
+                    }
+                    if (keys[SDL_SCANCODE_G])
+                    {
+                        greenKnight = greenKnight_new(40*keyCode);
+                        keyCode+=1;
+                    }
+                    if (keys[SDL_SCANCODE_B])
+                    {
+                        blueKnight = blueKnight_new(40*keyCode);
+                        keyCode+=1;
+                    }
+                    if (keys[SDL_SCANCODE_I])
+                    {
+                        indigoKnight = indigoKnight_new(40*keyCode);
+                        keyCode+=1;
+                    }
+                    if (keys[SDL_SCANCODE_V])
+                    {
+                        violetKnight = violetKnight_new(40*keyCode);
+                        keyCode+=1;
+                    }
+                    if (keys[SDL_SCANCODE_T])
+                    {
+                        chest = chest_new(40*keyCode);
+                        keyCode+=1;
+                    }
+                    if (keys[SDL_SCANCODE_Z])
+                    {
+                        redStatue = redStatue_new(40*keyCode);
+                        keyCode+=1;
+                    }
+                    if (keys[SDL_SCANCODE_X])
+                    {
+                        blueStatue = blueStatue_new(40*keyCode);
+                        keyCode+=1;
+                    }
+                    if (keys[SDL_SCANCODE_C])
+                    {
+                        greenStatue = greenStatue_new(40*keyCode);
+                        keyCode+=1;
+                    }
+                    if(keyCode>=2)
+                        gf2d_draw_rect_filled(square1,GFC_COLOR_WHITE);
+                    if(keyCode>=3)
+                        gf2d_draw_rect_filled(square2,GFC_COLOR_WHITE);
+                    if(keyCode>=4)
+                        gf2d_draw_rect_filled(square3,GFC_COLOR_WHITE);
+                    if(keyCode>=5)
+                        gf2d_draw_rect_filled(square4,GFC_COLOR_WHITE);
+                    if(keyCode>=6)
+                    {
+                        gf2d_draw_rect_filled(square5,GFC_COLOR_WHITE);
+                        if (keys[SDL_SCANCODE_SEMICOLON])
+                        {
+                            mainMenuOn=1;
+                            buildMenuOn=0;
+                        }
+                    }
+
                 }
-                //gf2d_mouse_draw();
-        gf3d_vgraphics_render_end();
-        if (gfc_input_command_down("exit"))_done = 1; // exit condition
-        game_frame_delay();
-    }    
-    vkDeviceWaitIdle(gf3d_vgraphics_get_default_logical_device());    
+
+                gf3d_vgraphics_render_end();
+                if (gfc_input_command_down("exit"))_done = 1; // exit condition
+                game_frame_delay();
+    }
+    vkDeviceWaitIdle(gf3d_vgraphics_get_default_logical_device());
     //cleanup
     entity_free(player);
     slog("gf3d program end");
@@ -242,7 +383,7 @@ void parse_arguments(int argc,char *argv[])
         {
             __DEBUG = 1;
         }
-    }    
+    }
 }
 
 void game_frame_delay()
@@ -259,6 +400,6 @@ void game_frame_delay()
         SDL_Delay(frame_delay - diff);
     }
     fps = 1000.0/MAX(SDL_GetTicks() - then,0.001);
-//     slog("fps: %f",fps);
+    //     slog("fps: %f",fps);
 }
 /*eol@eof*/

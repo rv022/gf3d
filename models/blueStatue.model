@@ -2,6 +2,6 @@
     "model":
     {
         "obj":"models/player/player.obj"
-        "texture":"models/player/blueKnight.png"
+        "texture":"models/player/blueStatue.png"
     }
 }

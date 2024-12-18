@@ -153,8 +153,6 @@ void entity_system_collide()
             slog("collision");
             entity_collide(&_entity_manager.entity_list[0]);
         }
-        else
-            slog("no collision");
     };
 
 }
