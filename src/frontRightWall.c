@@ -8,7 +8,7 @@ void frontRightWall_think(Entity *self);
 void frontRightWall_update(Entity *self);
 void frontRightWall_free(Entity *self);
 
-Entity *frontRightWall_new()
+Entity *frontRightWall_new(int y)
 {
     Entity *self;
 
@@ -19,7 +19,7 @@ Entity *frontRightWall_new()
         return NULL;
     }
     self->model = gf3d_model_load("models/frontRightWall.model"); /**<Entity's model if it has one.*/
-    self->position = gfc_vector3d(0,0,0); /**<where entity will be drawn*/
+    self->position = gfc_vector3d(0,0+y,0); /**<where entity will be drawn*/
     self->rotation = gfc_vector3d(0,0,0);
     self->scale = gfc_vector3d(1,1,1);
     self->body = gfc_box((self->position.x)+6, (self->position.y)+20, self->position.z, 16.0f, 1.0f, 1.0f);

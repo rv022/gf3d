@@ -7,6 +7,6 @@
  * @brief spawn player
  * @return NULL on error, or pointer to player.
  */
-Entity *frontLeftWall_new();
+Entity *frontLeftWall_new(int y);
 
 #endif

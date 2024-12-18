@@ -7,6 +7,6 @@
  * @brief spawn player
  * @return NULL on error, or pointer to player.
  */
-Entity *redStatue_new();
+Entity *redStatue_new(int y);
 
 #endif

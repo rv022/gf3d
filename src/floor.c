@@ -8,7 +8,7 @@ void floor_think(Entity *self);
 void floor_update(Entity *self);
 void floor_free(Entity *self);
 
-Entity *floor_new()
+Entity *floor_new(int y)
 {
     Entity *self;
 
@@ -19,7 +19,7 @@ Entity *floor_new()
         return NULL;
     }
     self->model = gf3d_model_load("models/floor.model"); /**<Entity's model if it has one.*/
-    self->position = gfc_vector3d(0,0,0); /**<where entity will be drawn*/
+    self->position = gfc_vector3d(0,0+y,0); /**<where entity will be drawn*/
     self->rotation = gfc_vector3d(0,0,0);
     self->scale = gfc_vector3d(1,1,1);
     self->body = gfc_box(self->position.x, self->position.y, 10000, 1.0f, 1.0f, 1.0f);

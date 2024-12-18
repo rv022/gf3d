@@ -7,6 +7,6 @@
  * @brief spawn player
  * @return NULL on error, or pointer to player.
  */
-Entity *chest_new();
+Entity *chest_new(int y);
 
 #endif

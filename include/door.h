@@ -7,6 +7,6 @@
  * @brief spawn player
  * @return NULL on error, or pointer to player.
  */
-Entity *door_new();
+Entity *door_new(int y);
 
 #endif

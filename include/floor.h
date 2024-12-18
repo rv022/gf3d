@@ -7,6 +7,6 @@
  * @brief spawn player
  * @return NULL on error, or pointer to player.
  */
-Entity *floor_new();
+Entity *floor_new(int y);
 
 #endif

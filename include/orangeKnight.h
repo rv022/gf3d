@@ -7,6 +7,6 @@
  * @brief spawn player
  * @return NULL on error, or pointer to player.
  */
-Entity *orangeKnight_new();
+Entity *orangeKnight_new(int y);
 
 #endif

@@ -42,6 +42,53 @@ void exitGame()
     _done = 1;
 }
 
+void make_dungeon()
+{
+    Entity *backWall, *throne, *door, *frontRightWall, *frontLeftWall, *leftWall, *rightWall, *floor;
+    backWall = backWall_new(0);
+    floor = floor_new(0);
+    throne = throne_new();
+    leftWall = leftWall_new(0);
+    rightWall = rightWall_new(0);
+    frontLeftWall = frontLeftWall_new(0);
+    frontRightWall = frontRightWall_new(0);
+    door = door_new(0);
+
+    floor = floor_new(40);
+    leftWall = leftWall_new(40);
+    rightWall = rightWall_new(40);
+    frontLeftWall = frontLeftWall_new(40);
+    frontRightWall = frontRightWall_new(40);
+    door = door_new(40);
+
+    floor = floor_new(80);
+    leftWall = leftWall_new(80);
+    rightWall = rightWall_new(80);
+    frontLeftWall = frontLeftWall_new(80);
+    frontRightWall = frontRightWall_new(80);
+    door = door_new(80);
+
+    floor = floor_new(120);
+    leftWall = leftWall_new(120);
+    rightWall = rightWall_new(120);
+    frontLeftWall = frontLeftWall_new(120);
+    frontRightWall = frontRightWall_new(120);
+    door = door_new(120);
+
+    floor = floor_new(160);
+    leftWall = leftWall_new(160);
+    rightWall = rightWall_new(160);
+    frontLeftWall = frontLeftWall_new(160);
+    frontRightWall = frontRightWall_new(160);
+    door = door_new(160);
+
+
+    backWall = backWall_new(240);
+    floor = floor_new(200);
+    leftWall = leftWall_new(200);
+    rightWall = rightWall_new(200);
+}
+
 void draw_origin()
 {
     gf3d_draw_edge_3d(
@@ -62,8 +109,9 @@ int main(int argc,char *argv[])
     Model *sky,*dino;
     GFC_Matrix4 skyMat,dinoMat;
     Entity *player, *orangeKnight, *backWall, *throne, *door, *frontRightWall, *frontLeftWall, *leftWall, *rightWall, *floor;
-    GFC_Rect screenTest;
+    GFC_Rect screenTest, square1,square2,square3,square4,square5;
     int mainMenuOn = 0;
+    int buildMenuOn = 0;
     const Uint8 * keys;
 
     //initializtion    
@@ -89,6 +137,11 @@ int main(int argc,char *argv[])
 
     //game setup
     screenTest = gfc_rect(0, 0, 10000.0, 10000.0);
+    square1 = gfc_rect(400,300,50,50);
+    square2 = gfc_rect(500,300,50,50);
+    square3 = gfc_rect(600,300,50,50);
+    square4 = gfc_rect(700,300,50,50);
+    square5 = gfc_rect(800,300,50,50);
     keys = SDL_GetKeyboardState(NULL);
     gf2d_mouse_load("actors/mouse.actor");
     sky = gf3d_model_load("models/sky.model");
@@ -96,15 +149,11 @@ int main(int argc,char *argv[])
     dino = gf3d_model_load("models/dino.model");
     gfc_matrix4_identity(dinoMat);
     player = player_new();
-    orangeKnight = orangeKnight_new();
-    backWall = backWall_new();
-    floor = floor_new();
-    throne = throne_new();
-    leftWall = leftWall_new();
-    rightWall = rightWall_new();
-    frontLeftWall = frontLeftWall_new();
-    frontRightWall = frontRightWall_new();
-    door = door_new();
+    orangeKnight = orangeKnight_new(0);
+    make_dungeon();
+
+
+
         //camera
     gf3d_camera_set_scale(gfc_vector3d(1,1,1));
     gf3d_camera_set_position(gfc_vector3d(15,-15,10));
@@ -130,9 +179,13 @@ int main(int argc,char *argv[])
         entity_system_collide();
 
         gf3d_vgraphics_render_start();
-        if (keys[SDL_SCANCODE_P])
+        if (keys[SDL_SCANCODE_O])
         {
            mainMenuOn=1;
+        }
+        if (keys[SDL_SCANCODE_P])
+        {
+            buildMenuOn=1;
         }
 
             //3D draws
@@ -154,6 +207,16 @@ int main(int argc,char *argv[])
                 {
                     gf2d_draw_rect_filled(screenTest,GFC_COLOR_BLACK);
                     gf2d_font_draw_line_tag("Night Knight",FT_H1,GFC_COLOR_WHITE, gfc_vector2d(550,300));
+                }
+                if(buildMenuOn==1)
+                {
+                    gf2d_draw_rect_filled(screenTest,GFC_COLOR_BLACK);
+                    gf2d_font_draw_line_tag("Train of Thought",FT_H1,GFC_COLOR_WHITE, gfc_vector2d(100,300));
+                    gf2d_draw_rect(square1,GFC_COLOR_WHITE);
+                    gf2d_draw_rect(square2,GFC_COLOR_WHITE);
+                    gf2d_draw_rect(square3,GFC_COLOR_WHITE);
+                    gf2d_draw_rect(square4,GFC_COLOR_WHITE);
+                    gf2d_draw_rect(square5,GFC_COLOR_WHITE);
                 }
                 //gf2d_mouse_draw();
         gf3d_vgraphics_render_end();
