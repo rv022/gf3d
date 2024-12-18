@@ -1,3 +1,5 @@
+#include <SDL.h>
+
 #include "simple_logger.h"
 #include "gfc_vector.h"
 #include "gfc_matrix.h"

@@ -62,6 +62,10 @@ int main(int argc,char *argv[])
     Model *sky,*dino;
     GFC_Matrix4 skyMat,dinoMat;
     Entity *player, *orangeKnight, *backWall, *throne, *door, *frontRightWall, *frontLeftWall, *leftWall, *rightWall, *floor;
+    GFC_Rect screenTest;
+    int mainMenuOn = 0;
+    const Uint8 * keys;
+
     //initializtion    
     parse_arguments(argc,argv);
     init_logger("gf3d.log",0);
@@ -84,6 +88,8 @@ int main(int argc,char *argv[])
     slog_sync();
 
     //game setup
+    screenTest = gfc_rect(0, 0, 10000.0, 10000.0);
+    keys = SDL_GetKeyboardState(NULL);
     gf2d_mouse_load("actors/mouse.actor");
     sky = gf3d_model_load("models/sky.model");
     gfc_matrix4_identity(skyMat);
@@ -124,6 +130,10 @@ int main(int argc,char *argv[])
         entity_system_collide();
 
         gf3d_vgraphics_render_start();
+        if (keys[SDL_SCANCODE_P])
+        {
+           mainMenuOn=1;
+        }
 
             //3D draws
         
@@ -138,10 +148,14 @@ int main(int argc,char *argv[])
                     GFC_COLOR_WHITE,
                     0);
 */
-                    draw_origin();
+                    //draw_origin();
             //2D draws
-                gf2d_mouse_draw();
-                gf2d_font_draw_line_tag("Health: 100",FT_H1,GFC_COLOR_WHITE, gfc_vector2d(10,10));
+                if(mainMenuOn==0)
+                {
+                    gf2d_draw_rect_filled(screenTest,GFC_COLOR_BLACK);
+                    gf2d_font_draw_line_tag("Night Knight",FT_H1,GFC_COLOR_WHITE, gfc_vector2d(550,300));
+                }
+                //gf2d_mouse_draw();
         gf3d_vgraphics_render_end();
         if (gfc_input_command_down("exit"))_done = 1; // exit condition
         game_frame_delay();
