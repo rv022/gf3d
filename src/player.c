@@ -6,6 +6,7 @@
 #include "gf3d_camera.h"
 #include "entity.h"
 #include "player.h"
+#include "gf2d_font.h"
 
 void player_think(Entity *self);
 void player_update(Entity *self);
@@ -33,7 +34,18 @@ Entity *player_new()
     self->rotation = gfc_vector3d(0,0,0);
     self->scale = gfc_vector3d(1,1,1);
     self->body = gfc_box(self->position.x, self->position.y, self->position.z, 1.0f, 1.0f, 1.0f);
-
+    self->doorNum = 10;
+    self->roomNum = 10;
+    self->health = 5;
+    self->maxHealth=5;
+    self->essence = 0;
+    self->speed = 1;
+    self->speedBuffStatus=0;
+    self->speedDebuffStatus=0;
+    self->attackBuffStatus=0;
+    self->attackDebuffStatus=0;
+    self->healthBuffStatus=0;
+    self->attack=4;
 
     self->think = player_think;
     self->update = player_update;
@@ -56,28 +68,33 @@ void player_collide(Entity *self)
     if(direction == 1)
     {
      frontCollision=1;
-     gfc_vector3d_add(self->position,self->position,gfc_vector3d(0,-0.7,0));
+     gfc_vector3d_add(self->position,self->position,gfc_vector3d(0,self->speed*-0.7,0));
     }
     else if(direction == 2)
     {
         backCollision =1;
-        gfc_vector3d_add(self->position,self->position,gfc_vector3d(0,0.7,0));
+        gfc_vector3d_add(self->position,self->position,gfc_vector3d(0,self->speed*0.7,0));
     }
     else if(direction == 3)
     {
         rightCollision=1;
-        gfc_vector3d_add(self->position,self->position,gfc_vector3d(-0.7,0,0));
+        gfc_vector3d_add(self->position,self->position,gfc_vector3d(self->speed*-0.7,0,0));
     }
     else if(direction == 4)
     {
         leftCollision=1;
-        gfc_vector3d_add(self->position,self->position,gfc_vector3d(0.7,0,0));
+        gfc_vector3d_add(self->position,self->position,gfc_vector3d(self->speed*0.7,0,0));
     }
 }
 
 void player_update(Entity *self)
 {
     if(!self)return;
+    if(self->health<0)
+    {
+        self->position = gfc_vector3d(0,0,0);
+        self->health = 5;
+    }
 
     self->body = gfc_box(self->position.x, self->position.y, self->position.z, 1.0f, 1.0f, 1.0f);
     GFC_Vector3D cameraPosition;
@@ -85,6 +102,7 @@ void player_update(Entity *self)
     gf3d_camera_set_position(cameraPosition);
     gf3d_camera_set_rotation(self->rotation);
     gf3d_camera_look_at(self->position, NULL);
+    gf2d_font_draw_line_tag("Night Knight",FT_H1,GFC_COLOR_WHITE, gfc_vector2d(550,300));
 
 
     //Player controls

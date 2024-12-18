@@ -23,6 +23,8 @@ Entity *redStatue_new(int y)
     self->rotation = gfc_vector3d(0,0,110);
     self->scale = gfc_vector3d(1,1,1);
     self->body = gfc_box(self->position.x, self->position.y, self->position.z, 1.0f, 1.0f, 1.0f);
+    self->type = 4;
+    self->attack = 1;
 
 
     self->think = redStatue_think;

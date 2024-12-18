@@ -14,6 +14,21 @@ typedef struct Entity_S
     GFC_Vector3D rotation;
     GFC_Vector3D scale;
     GFC_Box body;
+    int type;
+    int doorNum;
+    int roomNum;
+    int health;
+    int attack;
+    int essence;
+    int speed;
+    int maxHealth;
+    int speedBuffStatus;
+    int speedDebuffStatus;
+    int attackBuffStatus;
+    int attackDebuffStatus;
+    int healthBuffStatus;
+    int attacking;
+
     void (*think)(struct Entity_S *self);
     void (*update)(struct Entity_S *self);
     void (*free)(struct Entity_S *self);

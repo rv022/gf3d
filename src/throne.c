@@ -22,7 +22,8 @@ Entity *throne_new()
     self->position = gfc_vector3d(0,0,0); /**<where entity will be drawn*/
     self->rotation = gfc_vector3d(0,0,0);
     self->scale = gfc_vector3d(1,1,1);
-    self->body = gfc_box((self->position.x)-5, (self->position.y)-17, self->position.z, 11.0f, 1.0f, 1.0f);
+    self->body = gfc_box((self->position.x)-5, (self->position.y)-17, self->position.z, 11.0f, 2.0f, 2.0f);
+    self->type=20;
 
 
     self->think = throne_think;

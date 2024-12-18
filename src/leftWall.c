@@ -22,7 +22,7 @@ Entity *leftWall_new(int y)
     self->position = gfc_vector3d(0,0+y,0); /**<where entity will be drawn*/
     self->rotation = gfc_vector3d(0,0,0);
     self->scale = gfc_vector3d(1,1,1);
-    self->body = gfc_box((self->position.x)-20, (self->position.y)-20, self->position.z, 1.0f, 40.0f, 1.0f);
+    self->body = gfc_box((self->position.x)-20, (self->position.y)-20, self->position.z, 3.0f, 40.0f, 3.0f);
 
 
     self->think = leftWall_think;

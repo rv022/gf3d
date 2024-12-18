@@ -22,7 +22,8 @@ Entity *door_new(int y)
     self->position = gfc_vector3d(0,0+y,0); /**<where entity will be drawn*/
     self->rotation = gfc_vector3d(0,0,0);
     self->scale = gfc_vector3d(1,1,1);
-    self->body = gfc_box(self->position.x, self->position.y, 10000, 1.0f, 1.0f, 1.0f);
+    self->body = gfc_box((self->position.x)-6, (self->position.y)+20, self->position.z, 16.0f, 3.0f, 3.0f);
+    self->type = 10;
 
 
     self->think = door_think;
@@ -40,6 +41,7 @@ void door_think(Entity *self)
 void door_update(Entity *self)
 {
     if(!self)return;
+    self->body = gfc_box((self->position.x)-6, (self->position.y)+20, self->position.z, 16.0f, 1.0f, 1.0f);
     //need to keep bounding box moving
 }
 void door_free(Entity *self)

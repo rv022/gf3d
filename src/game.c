@@ -162,12 +162,13 @@ void draw_origin()
 }
 
 
+
 int main(int argc,char *argv[])
 {
     //local variables
     Model *sky,*dino;
     GFC_Matrix4 skyMat,dinoMat;
-    Entity *player, *backWall, *throne, *door, *frontRightWall, *frontLeftWall, *leftWall, *rightWall, *floor;
+    Entity *player, *backWall, *throne, *door, *frontRightWall, *frontLeftWall, *leftWall, *rightWall, *floor, *nightKnight;
     Entity *redKnight, *orangeKnight, *yellowKnight, *greenKnight, *blueKnight, *indigoKnight, *violetKnight;
     Entity *chest, *redStatue, *greenStatue, *blueStatue;
     GFC_Rect screenTest, square1,square2,square3,square4,square5;
@@ -252,6 +253,16 @@ int main(int argc,char *argv[])
             buildMenuOn=1;
         }
 
+        if (keys[SDL_SCANCODE_SPACE])
+        {
+            nightKnight = nightKnight_new(gfc_vector3d(player->position.x-5,player->position.y,player->position.z),player->rotation,player->attack);
+        }
+        if (keys[SDL_SCANCODE_0])
+        {
+            mainMenuOn=0;
+            player->health-=100;
+        }
+
             //3D draws
         
                 gf3d_model_draw_sky(sky,skyMat,GFC_COLOR_WHITE);
@@ -267,6 +278,51 @@ int main(int argc,char *argv[])
 */
                     //draw_origin();
             //2D draws
+
+                if(player->attackDebuffStatus==1)
+                    gf2d_font_draw_line_tag("Attack Debuff!",FT_H1,GFC_COLOR_WHITE, gfc_vector2d(1000,170));
+                if(player->speedDebuffStatus==1)
+                    gf2d_font_draw_line_tag("Speed Debuff!",FT_H1,GFC_COLOR_WHITE, gfc_vector2d(1000,130));
+                if(player->attackBuffStatus==1)
+                    gf2d_font_draw_line_tag("Attack Buff!",FT_H1,GFC_COLOR_WHITE, gfc_vector2d(1000,90));
+                if(player->healthBuffStatus==1)
+                    gf2d_font_draw_line_tag("Max Health Buff!",FT_H1,GFC_COLOR_WHITE, gfc_vector2d(1000,50));
+                if(player->speedBuffStatus==1)
+                    gf2d_font_draw_line_tag("Speed Buff!",FT_H1,GFC_COLOR_WHITE, gfc_vector2d(1000,10));
+                if(player->health==8)
+                    gf2d_font_draw_line_tag("Health: 8",FT_H1,GFC_COLOR_WHITE, gfc_vector2d(10,10));
+                if(player->health==7)
+                    gf2d_font_draw_line_tag("Health: 7",FT_H1,GFC_COLOR_WHITE, gfc_vector2d(10,10));
+                if(player->health==6)
+                    gf2d_font_draw_line_tag("Health: 6",FT_H1,GFC_COLOR_WHITE, gfc_vector2d(10,10));
+                if(player->health==5)
+                    gf2d_font_draw_line_tag("Health: 5",FT_H1,GFC_COLOR_WHITE, gfc_vector2d(10,10));
+                if(player->health==4)
+                    gf2d_font_draw_line_tag("Health: 4",FT_H1,GFC_COLOR_WHITE, gfc_vector2d(10,10));
+                if(player->health==3)
+                    gf2d_font_draw_line_tag("Health: 3",FT_H1,GFC_COLOR_WHITE, gfc_vector2d(10,10));
+                if(player->health==2)
+                    gf2d_font_draw_line_tag("Health: 2",FT_H1,GFC_COLOR_WHITE, gfc_vector2d(10,10));
+                if(player->health==1)
+                    gf2d_font_draw_line_tag("Health: 1",FT_H1,GFC_COLOR_WHITE, gfc_vector2d(10,10));
+                if(player->essence==8)
+                    gf2d_font_draw_line_tag("Essence: 8",FT_H1,GFC_COLOR_WHITE, gfc_vector2d(10,50));
+                if(player->essence==7)
+                    gf2d_font_draw_line_tag("Essence: 7",FT_H1,GFC_COLOR_WHITE, gfc_vector2d(10,50));
+                if(player->essence==6)
+                    gf2d_font_draw_line_tag("Essence: 6",FT_H1,GFC_COLOR_WHITE, gfc_vector2d(10,50));
+                if(player->essence==5)
+                    gf2d_font_draw_line_tag("Essence: 5",FT_H1,GFC_COLOR_WHITE, gfc_vector2d(10,50));
+                if(player->essence==4)
+                    gf2d_font_draw_line_tag("Essence: 4",FT_H1,GFC_COLOR_WHITE, gfc_vector2d(10,50));
+                if(player->essence==3)
+                    gf2d_font_draw_line_tag("Essence: 3",FT_H1,GFC_COLOR_WHITE, gfc_vector2d(10,50));
+                if(player->essence==2)
+                    gf2d_font_draw_line_tag("Essence: 2",FT_H1,GFC_COLOR_WHITE, gfc_vector2d(10,50));
+                if(player->essence==1)
+                    gf2d_font_draw_line_tag("Essence: 1",FT_H1,GFC_COLOR_WHITE, gfc_vector2d(10,50));
+                if(player->essence==0)
+                    gf2d_font_draw_line_tag("Essence: 0",FT_H1,GFC_COLOR_WHITE, gfc_vector2d(10,50));
                 if(mainMenuOn==0)
                 {
                     gf2d_draw_rect_filled(screenTest,GFC_COLOR_BLACK);

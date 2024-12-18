@@ -1,4 +1,5 @@
 #include "simple_logger.h"
+#include "gfc_vector.h"
 #include "entity.h"
 
 typedef struct
@@ -144,7 +145,7 @@ void entity_collide(Entity *self)
 
 void entity_system_collide()
 {
-    int i;
+    int i,j,k;
     for(i=1; i<_entity_manager.entity_max;i++)
     {
         if(!_entity_manager.entity_list[i]._inuse)continue;
@@ -152,8 +153,152 @@ void entity_system_collide()
         {
             slog("collision");
             entity_collide(&_entity_manager.entity_list[0]);
+            if(_entity_manager.entity_list[i].type==10)
+            {
+                if(_entity_manager.entity_list[0].doorNum==_entity_manager.entity_list[0].roomNum)
+                {
+                    while(_entity_manager.entity_list[i].position.z<30)
+                        gfc_vector3d_add(_entity_manager.entity_list[i].position,_entity_manager.entity_list[i].position,gfc_vector3d(0,0,0.001));
+                    _entity_manager.entity_list[0].doorNum+=1;
+                }
+            }
+            if(_entity_manager.entity_list[i].type==5)
+            {
+                _entity_manager.entity_list[0].health = _entity_manager.entity_list[0].health - _entity_manager.entity_list[i].attack;
+            }
+            if(_entity_manager.entity_list[i].type==6)
+            {
+                _entity_manager.entity_list[0].health = _entity_manager.entity_list[0].health - _entity_manager.entity_list[i].attack;
+                _entity_manager.entity_list[0].speed-=0.3;
+                _entity_manager.entity_list[0].speedDebuffStatus=1;
+            }
+            if(_entity_manager.entity_list[i].type==7)
+            {
+                _entity_manager.entity_list[0].health = _entity_manager.entity_list[0].health - _entity_manager.entity_list[i].attack;
+                _entity_manager.entity_list[0].attack-=1;
+                _entity_manager.entity_list[0].attackDebuffStatus=1;
+            }
+            if(_entity_manager.entity_list[i].type==2)
+            {
+                _entity_manager.entity_list[0].speed+=0.3;
+                _entity_manager.entity_list[0].roomNum=_entity_manager.entity_list[0].doorNum;
+                _entity_manager.entity_list[0].speedBuffStatus=1;
+            }
+            if(_entity_manager.entity_list[i].type==3)
+            {
+                if(_entity_manager.entity_list[0].maxHealth<8)
+                {
+                    _entity_manager.entity_list[0].maxHealth+=1;
+                    _entity_manager.entity_list[0].health+=1;
+                }
+                _entity_manager.entity_list[0].roomNum=_entity_manager.entity_list[0].doorNum;
+                _entity_manager.entity_list[0].healthBuffStatus=1;
+            }
+            if(_entity_manager.entity_list[i].type==4)
+            {
+                _entity_manager.entity_list[0].attack+=1;
+                _entity_manager.entity_list[0].roomNum=_entity_manager.entity_list[0].doorNum;
+                _entity_manager.entity_list[0].attackBuffStatus=1;
+            }
+            if(_entity_manager.entity_list[i].type==1)
+            {
+                _entity_manager.entity_list[0].essence+=3;
+                while(_entity_manager.entity_list[i].position.z<30)
+                    gfc_vector3d_add(_entity_manager.entity_list[i].position,_entity_manager.entity_list[i].position,gfc_vector3d(0,0,0.001));
+                _entity_manager.entity_list[0].roomNum=_entity_manager.entity_list[0].doorNum;
+            }
+            if(_entity_manager.entity_list[i].type==20)
+            {
+                if(_entity_manager.entity_list[0].essence>=2)
+                {
+                _entity_manager.entity_list[0].essence-=2;
+                _entity_manager.entity_list[0].maxHealth+=1;
+                _entity_manager.entity_list[0].health=_entity_manager.entity_list[0].maxHealth;
+                _entity_manager.entity_list[0].attack+=1;
+                }
+            }
         }
     };
+    for(j=1; j<_entity_manager.entity_max;j++)
+    {
+        if(!_entity_manager.entity_list[j]._inuse)continue;
+        for(k=1; k<_entity_manager.entity_max;k++)
+        {
+        if(!_entity_manager.entity_list[k]._inuse)continue;
+        if(j==k)continue;
+        if(gfc_box_overlap(_entity_manager.entity_list[j].body,_entity_manager.entity_list[k].body) == 1)
+        {
+            entity_collide(&_entity_manager.entity_list[j]);
+            if(_entity_manager.entity_list[k].type==30 && _entity_manager.entity_list[j].type==5)
+            {
+                _entity_manager.entity_list[j].health-=_entity_manager.entity_list[k].attack;
+                if(_entity_manager.entity_list[j].health<0)
+                {
+                    gfc_vector3d_add(_entity_manager.entity_list[j].position,_entity_manager.entity_list[j].position,gfc_vector3d(0,0,1000000));
+                    _entity_manager.entity_list[0].roomNum=_entity_manager.entity_list[0].doorNum;
+                    _entity_manager.entity_list[0].attackBuffStatus=0;
+                    _entity_manager.entity_list[0].attack-=1;
+                    _entity_manager.entity_list[0].attackDebuffStatus=0;
+                    _entity_manager.entity_list[0].attack-=1;
+                    _entity_manager.entity_list[0].healthBuffStatus=0;
+                    _entity_manager.entity_list[0].maxHealth-=1;
+                    _entity_manager.entity_list[0].speedDebuffStatus=0;
+                    _entity_manager.entity_list[0].speed-=0.3;
+                    _entity_manager.entity_list[0].speedBuffStatus=0;
+                    _entity_manager.entity_list[0].speed-=0.3;
+                    _entity_manager.entity_list[0].essence+=1;
+
+                }
+
+
+            }
+            if(_entity_manager.entity_list[k].type==30 && _entity_manager.entity_list[j].type==6)
+            {
+                _entity_manager.entity_list[j].health-=_entity_manager.entity_list[k].attack;
+                if(_entity_manager.entity_list[j].health<0)
+                {
+                    gfc_vector3d_add(_entity_manager.entity_list[j].position,_entity_manager.entity_list[j].position,gfc_vector3d(0,0,1000000));
+                    _entity_manager.entity_list[0].roomNum=_entity_manager.entity_list[0].doorNum;
+                    _entity_manager.entity_list[0].attackBuffStatus=0;
+                    _entity_manager.entity_list[0].attack-=1;
+                    _entity_manager.entity_list[0].attackDebuffStatus=0;
+                    _entity_manager.entity_list[0].attack-=1;
+                    _entity_manager.entity_list[0].healthBuffStatus=0;
+                    _entity_manager.entity_list[0].maxHealth-=1;
+                    _entity_manager.entity_list[0].speedDebuffStatus=0;
+                    _entity_manager.entity_list[0].speed-=0.3;
+                    _entity_manager.entity_list[0].speedBuffStatus=0;
+                    _entity_manager.entity_list[0].speed-=0.3;
+                    _entity_manager.entity_list[0].essence+=2;
+
+                }
+
+
+            }
+            if(_entity_manager.entity_list[k].type==30 && _entity_manager.entity_list[j].type==7)
+            {
+                _entity_manager.entity_list[j].health-=_entity_manager.entity_list[k].attack;
+                if(_entity_manager.entity_list[j].health<0)
+                {
+                    gfc_vector3d_add(_entity_manager.entity_list[j].position,_entity_manager.entity_list[j].position,gfc_vector3d(0,0,1000000));
+                    _entity_manager.entity_list[0].roomNum=_entity_manager.entity_list[0].doorNum;
+                    _entity_manager.entity_list[0].attackBuffStatus=0;
+                    _entity_manager.entity_list[0].attack-=1;
+                    _entity_manager.entity_list[0].attackDebuffStatus=0;
+                    _entity_manager.entity_list[0].attack-=1;
+                    _entity_manager.entity_list[0].healthBuffStatus=0;
+                    _entity_manager.entity_list[0].maxHealth-=1;
+                    _entity_manager.entity_list[0].speedDebuffStatus=0;
+                    _entity_manager.entity_list[0].speed-=0.3;
+                    _entity_manager.entity_list[0].speedBuffStatus=0;
+                    _entity_manager.entity_list[0].speed-=0.3;
+                    _entity_manager.entity_list[0].essence+=2;
+
+                }
+
+
+            }
+        }}};
 
 }
 /*eol@eof*/
