@@ -2,6 +2,6 @@
     "model":
     {
         "obj":"models/sky/sky.obj",
-        "texture":"models/sky/sky.png"
+        "texture":"models/sky/sky.jpg"
     }
 }
