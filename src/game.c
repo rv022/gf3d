@@ -271,6 +271,8 @@ int main(int argc,char *argv[])
                 {
                     gf2d_draw_rect_filled(screenTest,GFC_COLOR_BLACK);
                     gf2d_font_draw_line_tag("Night Knight",FT_H1,GFC_COLOR_WHITE, gfc_vector2d(550,300));
+                    gf2d_font_draw_line_tag("(P)LAY",FT_H1,GFC_COLOR_WHITE, gfc_vector2d(350,450));
+                    gf2d_font_draw_line_tag("(L)EARN",FT_H1,GFC_COLOR_WHITE, gfc_vector2d(800,450));
                 }
                 if(buildMenuOn==1)
                 {
@@ -284,6 +286,7 @@ int main(int argc,char *argv[])
                     gf2d_draw_rect(square4,GFC_COLOR_WHITE);
                     gf2d_draw_rect(square5,GFC_COLOR_WHITE);
                     }
+
                     //Key Code for Dungeon Picker
                     if (keys[SDL_SCANCODE_R])
                     {
@@ -351,6 +354,7 @@ int main(int argc,char *argv[])
                     if(keyCode>=6)
                     {
                         gf2d_draw_rect_filled(square5,GFC_COLOR_WHITE);
+                        keyCode+=10;
                         if (keys[SDL_SCANCODE_SEMICOLON])
                         {
                             mainMenuOn=1;

@@ -1,7 +1,7 @@
 {
     "model":
     {
-        "obj":"models/player/player.obj"
+        "obj":"models/player/boss.obj"
         "texture":"models/player/redKnight.png"
     }
 }

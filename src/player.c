@@ -16,6 +16,7 @@ int frontCollision = 0;
 int leftCollision = 0;
 int rightCollision = 0;
 int backCollision = 0;
+int anim = 0;
 
 Entity *player_new()
 {
@@ -77,6 +78,7 @@ void player_collide(Entity *self)
 void player_update(Entity *self)
 {
     if(!self)return;
+
     self->body = gfc_box(self->position.x, self->position.y, self->position.z, 1.0f, 1.0f, 1.0f);
     GFC_Vector3D cameraPosition;
     gfc_vector3d_add(cameraPosition,self->position,gfc_vector3d(0,-15,15));
