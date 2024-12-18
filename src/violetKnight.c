@@ -25,7 +25,7 @@ Entity *violetKnight_new(int y)
     self->scale = gfc_vector3d(1,1,1);
     self->body = gfc_box(self->position.x, self->position.y, self->position.z, 2.0f, 1.0f, 1.0f);
     self->type = 7;
-    self->attack = 5;
+    self->attack = 3;
     self->health = 20;
 
 
